@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang - AquaPulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .navbar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            padding: 0 5% !important;
+            box-sizing: border-box;
+            z-index: 2000;
+        }
+
+        .hero.tentang-page {
+            height: auto;
+            min-height: 100vh;
+            padding: 100px 0 60px;
+            display: block;
+            text-align: left;
+        }
+
+        .hero.tentang-page .hero-bg,
+        .hero.tentang-page .hero-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 35px;
+            color: #f8fafc;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .about-card h3 {
+            color: var(--accent);
+            margin-bottom: 18px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .about-card p {
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .team-item {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 15px 18px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .team-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(4px);
+        }
+
+        .avatar-initials {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .team-info strong {
+            display: block;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+
+        .team-info span {
+            font-size: 0.82rem;
+            color: #94a3b8;
+        }
+
+        .about-header-text {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .about-header-text h1 {
+            font-size: 50px;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .site-footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        @media(max-width:768px) {
+            .about-header-text h1 {
+                font-size: 32px;
+            }
+
+            .about-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h2>Aqua<span>Pulse</span></h2>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="analisis.html">Analisis Spasial</a></li>
+            <li><a href="repositori.html">Repositori</a></li>
+            <li><a href="gallery.html">Galeri</a></li>
+            <li><a href="tentang.html" class="active">Tentang</a></li>
+            <li><a href="kontak.html">Hubungi Kami</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">Beranda</a>
+        <a href="analisis.html">Analisis Spasial</a>
+        <a href="repositori.html">Repositori</a>
+        <a href="gallery.html">Galeri</a>
+        <a href="tentang.html" class="active">Tentang</a>
+        <a href="kontak.html">Hubungi Kami</a>
+    </nav>
+
+    <section class="hero tentang-page">
+        <div class="hero-bg"
+            style="background: url('background.jpg') no-repeat center center fixed; background-size:cover;"></div>
+        <div class="hero-overlay"
+            style="background: linear-gradient(to bottom, rgba(0,26,51,0.85), rgba(0,45,90,0.7));"></div>
+
+        <div class="container">
+            <div class="about-header-text">
+                <h1>Apa itu AquaPulse?</h1>
+                <p>Menghubungkan data ilmiah dengan kepedulian masyarakat terhadap laut Sulawesi Utara.</p>
+            </div>
+
+            <div class="about-card">
+                <h3><i class="fas fa-anchor"></i> Di Balik Layar AquaPulse</h3>
+                <p>AquaPulse lahir dari kegelisahan sederhana: Sulawesi Utara adalah jantung dari <b>Segitiga Terumbu
+                        Karang Dunia</b>, namun datanya seringkali sulit diakses. Kami membangun platform ini untuk
+                    memberikan "suara" bagi ekosistem bawah laut kita, memastikan setiap titik biodiversitas dapat
+                    dipantau demi masa depan konservasi.</p>
+            </div>
+
+            <div class="about-card">
+                <h3><i class="fas fa-database"></i> Sumber & Metodologi Data</h3>
+                <p>Seluruh informasi di platform ini ditarik secara langsung dari <b>Ocean Biodiversity Information
+                        System (OBIS)</b> UNESCO. Kami menjembatani database ilmiah tersebut ke dalam visualisasi yang
+                    interaktif guna memastikan setiap data yang tersaji adalah informasi saintifik yang valid dan
+                    mutakhir.</p>
+            </div>
+
+            <div class="about-card">
+                <h3><i class="fas fa-users"></i> Dibuat Oleh Kelompok 10</h3>
+                <div class="team-grid">
+                    <div class="team-item">
+                        <div class="avatar-initials" style="background:linear-gradient(135deg,#004a99,#00a8cc);">VA
+                        </div>
+                        <div class="team-info">
+                            <strong>Veren Amelia Lajame</strong>
+                            <span>231011060066</span>
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="avatar-initials" style="background:linear-gradient(135deg,#0f6e56,#1d9e75);">JL
+                        </div>
+                        <div class="team-info">
+                            <strong>Jonathan Lodewik Kindangen</strong>
+                            <span>231011060070</span>
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="avatar-initials" style="background:linear-gradient(135deg,#854f0b,#ef9f27);">MF
+                        </div>
+                        <div class="team-info">
+                            <strong>Mario Fransiskus Lomban</strong>
+                            <span>231011060071</span>
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="avatar-initials" style="background:linear-gradient(135deg,#6d2877,#b04fd4);">DJ
+                        </div>
+                        <div class="team-info">
+                            <strong>Daniel Jeremi Igir</strong>
+                            <span>231011060078</span>
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="avatar-initials" style="background:linear-gradient(135deg,#993556,#d4537e);">MY
+                        </div>
+                        <div class="team-info">
+                            <strong>Maverick Yort Mamanua</strong>
+                            <span>231011060061</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Aqua<span>Pulse</span></h3>
+                <p>Platform pemantauan biodiversitas laut Sulawesi Utara berbasis data saintifik dari OBIS UNESCO.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="analisis.html">Analisis Spasial</a></li>
+                    <li><a href="repositori.html">Repositori Data</a></li>
+                    <li><a href="gallery.html">Galeri Biota</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Sumber Data</h4>
+                <ul>
+                    <li><a href="https://obis.org" target="_blank">OBIS UNESCO</a></li>
+                    <li><a href="https://www.iucnredlist.org" target="_blank">IUCN Red List</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AquaPulse — Kelompok 10, Universitas Sam Ratulangi</p>
+            <span class="obis-badge"><i class="fas fa-database" style="font-size:10px;margin-right:4px;"></i>Data: OBIS
+                UNESCO</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

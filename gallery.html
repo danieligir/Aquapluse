@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaPulse - Galeri Biota Laut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        
+        .gallery-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .gallery-header h1 {
+            font-size: 30px;
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .gallery-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        @media(max-width:1100px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .biota-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .biota-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-wrapper {
+            height: 230px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .biota-card:hover .card-img-wrapper img {
+            transform: scale(1.12);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(0, 74, 153, 0.88);
+            color: white;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 2;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-content {
+            padding: 18px;
+            text-align: center;
+        }
+
+        .card-content h3 {
+            margin: 0;
+            font-size: 17px;
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .card-content p {
+            margin: 6px 0 0;
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 720px;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: slideUp 0.4s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(60px);
+                opacity: 0
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1
+            }
+        }
+
+        .modal-header-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        .modal-body h2 {
+            margin: 0;
+            color: var(--primary);
+            font-style: italic;
+            font-size: 26px;
+        }
+
+        .modal-info {
+            display: flex;
+            gap: 18px;
+            margin: 16px 0;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            flex-wrap: wrap;
+        }
+
+        .modal-desc {
+            line-height: 1.85;
+            color: #475569;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: #ef4444;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f1f7ff;
+            padding: 7px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            border: 1px solid #e2e8f0;
+        }.page-bg-block {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('background.jpg') center/cover no-repeat fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,26,51,0.4),
+        rgba(0,45,90,0.3)
+    );
+}
+
+body {
+    position: relative;
+    z-index: 1;
+}
+
+.gallery-container,
+.navbar,
+.site-footer {
+    position: relative;
+    z-index: 2;
+}
+    </style>
+</head>
+<body>
+    <div class="page-bg-block">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+    </div>
+
+    <nav class="navbar">
+        <h2>Aqua<span>Pulse</span></h2>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="analisis.html">Analisis Spasial</a></li>
+            <li><a href="repositori.html">Repositori</a></li>
+            <li><a href="gallery.html" class="active">Galeri</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="kontak.html">Hubungi Kami</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">Beranda</a>
+        <a href="analisis.html">Analisis Spasial</a>
+        <a href="repositori.html">Repositori</a>
+        <a href="gallery.html" class="active">Galeri</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="kontak.html">Hubungi Kami</a>
+    </nav>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>Eksplorasi Biota Laut Sulawesi Utara</h1>
+            <p>Representasi visual dari 8 spesies dominan dalam sistem pemantauan AquaPulse.</p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="biotaModal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal()"><i class="fas fa-times fa-lg"></i></div>
+            <img src="" id="modalImg" class="modal-header-img">
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <div class="modal-info">
+                    <span id="modalRank"><i class="fas fa-dna"></i> </span>
+                    <span><i class="fas fa-check-circle" style="color:#22c55e;"></i> Terverifikasi OBIS</span>
+                </div>
+                <p class="modal-desc" id="modalDesc"></p>
+                <div class="tag-container" id="modalTags"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Aqua<span>Pulse</span></h3>
+                <p>Platform pemantauan biodiversitas laut Sulawesi Utara berbasis data saintifik dari OBIS UNESCO.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="analisis.html">Analisis Spasial</a></li>
+                    <li><a href="repositori.html">Repositori Data</a></li>
+                    <li><a href="gallery.html">Galeri Biota</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Sumber Data</h4>
+                <ul>
+                    <li><a href="https://obis.org" target="_blank">OBIS UNESCO</a></li>
+                    <li><a href="https://www.iucnredlist.org" target="_blank">IUCN Red List</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AquaPulse — Kelompok 10, Universitas Sam Ratulangi</p>
+            <span class="obis-badge"><i class="fas fa-database" style="font-size:10px;margin-right:4px;"></i>Data: OBIS
+                UNESCO</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const biotaData = [
+            { name: "Enhalus acoroides", common: "Lamun Tropis Besar", category: "Flora Laut", img: "https://underseaproductions-wp-media.s3.us-west-2.amazonaws.com/2022/07/Clip-Image-29539.jpg", desc: "Lamun terbesar di dunia yang tumbuh subur di perairan dangkal Sulawesi Utara. Berfungsi sebagai paru-paru laut dan pelindung pantai dari abrasi.", tags: ["Produksi Oksigen", "Penstabil Sedimen", "Zona Dangkal"] },
+            { name: "Thalassia hemprichii", common: "Lamun Dugong", category: "Flora Laut", img: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Lamun.jpg", desc: "Jenis lamun yang sangat umum dan menjadi sumber pakan utama bagi Dugong. Sering ditemukan membentuk padang rumput laut yang luas.", tags: ["Sumber Pakan", "Ekosistem Pesisir", "Bio-Indikator"] },
+            { name: "Linckia laevigata", common: "Bintang Laut Biru", category: "Echinodermata", img: "https://png.pngtree.com/thumb_back/fh260/background/20220619/pngtree-blue-starfish-linckia-laevigata-blue-linckia-aquatic-blue-starfish-photo-image_24878100.jpg", desc: "Spesies bintang laut ikonik dengan warna biru elektrik. Menjadi daya tarik wisatawan di Bunaken dan sekitarnya.", tags: ["Reef Dweller", "Regenerasi", "Ikonik"] },
+            { name: "Acropora", common: "Karang Meja", category: "Anthozoa", img: "https://indomgb.s3.amazonaws.com/wp-content/uploads/2016/01/22100636/table-coral-2.jpg", desc: "Karang pembentuk utama terumbu (reef builder). Memberikan struktur rumit yang menjadi tempat persembunyian ribuan spesies ikan kecil.", tags: ["Habitat Ikan", "Kalsifikasi", "Arsitek Terumbu"] },
+            { name: "Tridacna maxima", common: "Kima Kecil", category: "Molusca", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMLRHA4XzDKFKLQslyX9stmXwQuY73iErSXQ&s", desc: "Kerang raksasa dengan mantel berwarna warni. Merupakan filter feeder yang membantu menjernihkan air di sekitar terumbu karang.", tags: ["Dilindungi", "Filter Feeder", "Mantel Warna-warni"] },
+            { name: "Chelonia mydas", common: "Penyu Hijau", category: "Reptilia", img: "https://www.monaconatureencyclopedia.com/wp-content/uploads/2008/08/2-Chelonia-mydas-%C2%A9-BarryFackler.jpg", desc: "Penghuni setia perairan Bunaken. Penyu ini bermigrasi ribuan kilometer namun selalu kembali ke pesisir Sulawesi Utara untuk mencari makan.", tags: ["Migrasi Jauh", "Terancam Punah", "Herbivora Laut"] },
+            { name: "Amphiprion ocellaris", common: "Ikan Badut (Nemo)", category: "Pisces", img: "https://www.liveaquaria.com/cdn/shop/articles/a_385_clownfish-article-header_5b76c72b-e1a0-403f-b061-635bfb46173d.jpg?v=1770768581", desc: "Ikan populer yang bersimbiosis mutualisme dengan anemon laut. Sangat mudah ditemukan di perairan Sulawesi Utara yang sehat.", tags: ["Simbiosis", "Teritorial", "Daya Tarik Wisata"] },
+            { name: "Manta alfredi", common: "Ikan Pari Manta", category: "Pisces", img: "https://www.monaconatureencyclopedia.com/wp-content/uploads/2018/01/7_manta_alfredi.jpg", desc: "Ikan pari raksasa yang elegan. Kehadirannya di Sulawesi Utara menjadi indikator tingginya nutrien dan kebersihan air laut.", tags: ["Indikator Nutrien", "Raksasa Lembut", "Filter Feeder"] }
+        ];
+
+        const grid = document.getElementById('galleryGrid');
+        biotaData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'biota-card';
+            card.innerHTML = `
+                <div class="card-img-wrapper">
+                    <span class="category-badge">${item.category}</span>
+                    <img src="${item.img}" alt="${item.name}" loading="lazy">
+                </div>
+                <div class="card-content">
+                    <h3>${item.name}</h3>
+                    <p>${item.common}</p>
+                </div>`;
+            card.onclick = () => openModal(item);
+            grid.appendChild(card);
+        });
+
+        function openModal(data) {
+            document.getElementById('modalImg').src = data.img;
+            document.getElementById('modalTitle').innerText = data.name;
+            document.getElementById('modalRank').innerHTML = `<i class="fas fa-dna"></i> Klasifikasi: ${data.category}`;
+            document.getElementById('modalDesc').innerText = data.desc;
+            const tags = document.getElementById('modalTags');
+            tags.innerHTML = '';
+            data.tags.forEach(t => { const s = document.createElement('span'); s.className = 'tag'; s.innerText = t; tags.appendChild(s); });
+            document.getElementById('biotaModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('biotaModal').style.display = 'none'; }
+        window.onclick = (e) => { if (e.target === document.getElementById('biotaModal')) closeModal(); };
+    </script>
+</body>
+
+</html>

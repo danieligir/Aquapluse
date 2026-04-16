@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Spasial - AquaPulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="page-bg-block">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-logo">Aqua<span>Pulse</span></div>
+        <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+        <div class="loading-text">Menghubungkan ke OBIS API...</div>
+    </div>
+
+    <nav class="navbar">
+        <h2>Aqua<span>Pulse</span></h2>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="analisis.html" class="active">Analisis Spasial</a></li>
+            <li><a href="repositori.html">Repositori</a></li>
+            <li><a href="gallery.html">Galeri</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="kontak.html">Hubungi Kami</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">Beranda</a>
+        <a href="analisis.html" class="active">Analisis Spasial</a>
+        <a href="repositori.html">Repositori</a>
+        <a href="gallery.html">Galeri</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="kontak.html">Hubungi Kami</a>
+    </nav>
+
+    <!-- Mobile sidebar toggle (tampil di mobile) -->
+    <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
+        <i class="fas fa-sliders-h"></i> Tampilkan Filter
+    </button>
+
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR — filter controls -->
+        <aside class="sidebar-filter" id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-sliders-h"></i> Kontrol Data</h3>
+                <p>Parameter Visualisasi Real-time</p>
+            </div>
+
+            <div class="filter-group">
+                <label>Filter Spesies</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="mapSearch" class="filter-input" placeholder="Cari nama ilmiah...">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Tahun Observasi</label>
+                <select id="filterYear" class="filter-input">
+                    <option value="all">Semua Tahun</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Radius Marker (<span id="radVal">4</span>px)</label>
+                <input type="range" id="radiusSlider" min="2" max="15" value="4" class="range-input">
+            </div>
+
+            <div class="sidebar-tip">
+                <i class="fas fa-lightbulb"></i>
+                <span>Data diperbarui otomatis setiap kali filter diubah. Klik marker di peta untuk detail spesies.</span>
+            </div>
+        </aside>
+
+        <!-- TOMBOL TOGGLE — di LUAR sidebar (perbaikan bug) -->
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Sidebar">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content-dashboard">
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#e0f2fe;color:#0369a1;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>Total Observasi</p>
+                        <h4 id="statCount">—</h4>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#e8fcf1;color:#2ecc71;">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>Kepadatan Data</p>
+                        <h4 style="color:#2ecc71;font-size:13px;">DINAMIS</h4>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background:#fff4e5;color:#ff9800;">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>Status Koneksi</p>
+                        <h4 id="connStatus" style="font-size:12px;color:#ff9800;">Menunggu...</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grafik (perbaikan: canvas ada di halaman ini) -->
+            <div class="chart-row">
+                <div class="chart-panel">
+                    <h4><i class="fas fa-chart-bar"></i> 5 Spesies Terbanyak</h4>
+                    <canvas id="chartBar"></canvas>
+                </div>
+                <div class="chart-panel">
+                    <h4><i class="fas fa-chart-pie"></i> Distribusi Kategori</h4>
+                    <canvas id="chartDoughnut"></canvas>
+                </div>
+            </div>
+
+            <!-- Peta -->
+            <div class="map-frame">
+                <div id="map"></div>
+                <!-- Legend warna marker -->
+                <div class="map-legend" id="mapLegend"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Aqua<span>Pulse</span></h3>
+                <p>Platform pemantauan biodiversitas laut Sulawesi Utara berbasis data saintifik dari OBIS UNESCO.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="analisis.html">Analisis Spasial</a></li>
+                    <li><a href="repositori.html">Repositori Data</a></li>
+                    <li><a href="gallery.html">Galeri Biota</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Sumber Data</h4>
+                <ul>
+                    <li><a href="https://obis.org" target="_blank">OBIS UNESCO</a></li>
+                    <li><a href="https://www.iucnredlist.org" target="_blank">IUCN Red List</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AquaPulse — Kelompok 10, Universitas Sam Ratulangi</p>
+            <span class="obis-badge"><i class="fas fa-database" style="font-size:10px;margin-right:4px;"></i>Data: OBIS UNESCO</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

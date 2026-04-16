@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositori Data - AquaPulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-bg-block">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-logo">Aqua<span>Pulse</span></div>
+        <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+        <div class="loading-text">Memuat repositori data spesies...</div>
+    </div>
+
+    <nav class="navbar">
+        <h2>Aqua<span>Pulse</span></h2>
+        <ul class="nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="analisis.html">Analisis Spasial</a></li>
+            <li><a href="repositori.html" class="active">Repositori</a></li>
+            <li><a href="gallery.html">Galeri</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="kontak.html">Hubungi Kami</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">Beranda</a>
+        <a href="analisis.html">Analisis Spasial</a>
+        <a href="repositori.html" class="active">Repositori</a>
+        <a href="gallery.html">Galeri</a>
+        <a href="tentang.html">Tentang</a>
+        <a href="kontak.html">Hubungi Kami</a>
+    </nav>
+
+    <div class="container" style="padding-top:30px;">
+
+        <!-- Header -->
+        <div style="margin-bottom:28px;">
+            <h1 style="font-size:28px;font-weight:800;color:#ffffff;margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">
+                <i class="fas fa-database" style="margin-right:10px;color:#00a8cc;"></i>Repositori Data Spesies
+            </h1>
+            <p style="color:rgba(255,255,255,0.75);font-size:15px;">Database terverifikasi biodiversitas laut Sulawesi Utara bersumber dari OBIS UNESCO.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="repo-stats">
+            <div class="repo-stat">
+                <span class="num" id="statSpecies">—</span>
+                <span class="lbl">Spesies Unik</span>
+            </div>
+            <div class="repo-stat">
+                <span class="num" id="statObs">—</span>
+                <span class="lbl">Total Observasi</span>
+            </div>
+            <div class="repo-stat">
+                <span class="num" id="statCategories">—</span>
+                <span class="lbl">Kategori Biota</span>
+            </div>
+            <div class="repo-stat" style="background:linear-gradient(135deg,#1a4a7a,#006699);">
+                <span class="num" id="statYears" style="font-size:22px;">—</span>
+                <span class="lbl">Rentang Tahun</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-table"></i> Database Terverifikasi</h3>
+
+            <!-- Pencarian -->
+            <input type="text" id="universalSearch" class="search-box" placeholder="&#128269; Cari nama ilmiah, nama lokal, atau kategori...">
+
+            <!-- Filter Kategori -->
+            <div class="cat-filters" id="catFilters">
+                <!-- diisi oleh JS -->
+            </div>
+
+            <!-- Export Button -->
+            <button class="export-btn" onclick="exportCSV()">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </button>
+
+            <!-- Tabel -->
+            <div class="table-scroll">
+                <table id="speciesTable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Ilmiah</th>
+                            <th>Nama Lokal</th>
+                            <th>Kategori</th>
+                            <th>Kedalaman (Avg)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>Aqua<span>Pulse</span></h3>
+                <p>Platform pemantauan biodiversitas laut Sulawesi Utara berbasis data saintifik dari OBIS UNESCO.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="analisis.html">Analisis Spasial</a></li>
+                    <li><a href="repositori.html">Repositori Data</a></li>
+                    <li><a href="gallery.html">Galeri Biota</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Sumber Data</h4>
+                <ul>
+                    <li><a href="https://obis.org" target="_blank">OBIS UNESCO</a></li>
+                    <li><a href="https://www.iucnredlist.org" target="_blank">IUCN Red List</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 AquaPulse — Kelompok 10, Universitas Sam Ratulangi</p>
+            <span class="obis-badge"><i class="fas fa-database" style="font-size:10px;margin-right:4px;"></i>Data: OBIS UNESCO</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
